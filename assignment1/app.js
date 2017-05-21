@@ -33,7 +33,7 @@
     var validDishesNo = 0;
 
     for (var i in dishesArray) {
-      if(!isEmpty(dishesArray[i])) {
+      if(!isEmpty(dishesArray[i].trim())) {
         validDishesNo++;
       }
     }
