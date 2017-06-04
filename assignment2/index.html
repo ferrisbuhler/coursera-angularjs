@@ -9,35 +9,37 @@
 		<script src="app.js"></script>    
   </head>
   
-  <body ng-app='ShoppingListApp'>
-    <div ng-controller='ShoppingListController' class="container">
+  <body ng-app='ShoppingListCheckOff'>
+    <div class="container">
       <h1>Shopping List Check Off</h1>
+      <h3>for a traditional Bavarian breakfast party</h3>
+      <h4>Don't forget to wear Lederhosn or Dirndl.</h4>
 
       <div class="row">
 
         <!-- To Buy List -->
-        <div ng-controller='ToBuyListController' class="col-md-6">
+        <div ng-controller='ToBuyController as toBuy' class="col-md-6">
          <h2>To Buy:</h2>
          <ul>
-           <li ng-repeat="item in toBuyList">
+           <li ng-repeat="item in toBuy.items">
              Buy {{item.quantity}} {{item.name}}
-             <button ng-click="boughItem($index)" class="btn btn-default">
+             <button ng-click="toBuy.buyItem($index)" class="btn btn-default">
                <span class="glyphicon glyphicon-ok"></span> Bought
              </button>
            </li>
          </ul>
-         <div class="emptyMessage">{{"Everything is bought!" | showMessage : toBuyList.length}}</div>
+         <div ng-if="!toBuy.items.length" class="emptyMessage">Everything is bought!</div>
         </div>
 
         <!-- Already Bought List -->
-        <div ng-controller='AlreadyBoughtListController' class="col-md-6">
+        <div ng-controller='AlreadyBoughtController as alreadyBought' class="col-md-6">
          <h2>Already Bought:</h2>
          <ul>
-           <li ng-repeat="item in alreadyBoughtList">
+           <li ng-repeat="item in alreadyBought.items">
              Bought {{item.quantity}} {{item.name}}
            </li>
          </ul>
-         <div class="emptyMessage">{{"Nothing bought yet." | showMessage : alreadyBoughtList.length}}</div>
+         <div ng-if="!alreadyBought.items.length" class="emptyMessage">Nothing bought yet.</div>
         </div>
       </div>
     </div>

@@ -1,70 +1,72 @@
 (function () {
   'use strict';
 
-  angular.module('ShoppingListApp', [])
-  .controller('ShoppingListController', ShoppingListController)
-  .controller('ToBuyListController', ToBuyListController)
-  .controller('AlreadyBoughtListController', AlreadyBoughtListController)
-  .filter('showMessage', messageFilterFactory);
+  angular.module('ShoppingListCheckOff', [])
+  .controller('ToBuyController', ToBuyController)
+  .controller('AlreadyBoughtController', AlreadyBoughtController)
+  .service('ShoppingListCheckOffService', ShoppingListCheckOffService);
   
-  // initial shopping list for a Bavarian breakfast party for 10 persons
-  var initialShoppingList = [
-    {
-      name: "Weisswuerste (Stueck)",
-      quantity: "20"
-    }, {
-      name: "Obatzda (g)",
-      quantity: "500"
-    }, {
-      name: "Suesser Senf (g)",
-      quantity: "100"
-    }, {
-      name: "Brez'n (Stueck)",
-      quantity: "25"
-    }, {
-      name: "Rettich (g)",
-      quantity: "500"
-    }, {
-      name: "Weissbier (l)",
-      quantity: "10"
-    }
-  ];
-  
-  // parent controller
-  ShoppingListController.$inject = ['$scope'];
-  function ShoppingListController($scope) {
-    $scope.alreadyBoughtList = [];
-  };
-
-  // child controller 1 - controlls the "to buy" list and the "bought" button
-  ToBuyListController.$inject = ['$scope'];
-  function ToBuyListController($scope) {
-    $scope.toBuyList = initialShoppingList;
+  // controller 1 - controlls the "to buy" list and the "bought" button
+  ToBuyController.$inject = ['ShoppingListCheckOffService'];
+  function ToBuyController(ShoppingListCheckOffService) {
+    var toBuy = this;
     
-    $scope.boughItem = function (index) {
-      var itemsInTransfer = $scope.toBuyList.splice(index, 1);
-      $scope.alreadyBoughtList.push(itemsInTransfer[0]);
+    toBuy.buyItem = function (index) {
+      ShoppingListCheckOffService.buyItem(index);
     }
+    
+    toBuy.items = ShoppingListCheckOffService.getToBuyList();
   };
 
-  // child controller 2 - controlls the "already bought" list
-  AlreadyBoughtListController.$inject = ['$scope'];
-  function AlreadyBoughtListController($scope) {
+  // controller 2 - controlls the "already bought" list
+  AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
+  function AlreadyBoughtController(ShoppingListCheckOffService) {
+    var alreadyBought = this;
+    alreadyBought.items = ShoppingListCheckOffService.getAlreadyBoughtList();
+  };
   
-  };
+  // singleton service controlling both shopping lists
+  function ShoppingListCheckOffService() {
+    var service = this;
 
-  // factory for message filter
-  function messageFilterFactory() {
-    // supress the message unless the list length is 0
-    return function (message, len) {
-      if(len == 0) {
-        return message;
-      } else {
-        return "";
+    // shopping list for a Bavarian breakfast party for 10 persons
+    var toBuyList = [
+      {
+        name: "Weisswuerste (Stueck)",
+        quantity: "20"
+      }, {
+        name: "Obatzda (g)",
+        quantity: "500"
+      }, {
+        name: "Suesser Senf (g)",
+        quantity: "100"
+      }, {
+        name: "Brez'n (Stueck)",
+        quantity: "25"
+      }, {
+        name: "Rettich (g)",
+        quantity: "500"
+      }, {
+        name: "Weissbier (l)",
+        quantity: "10"
       }
-    }
-  };
+    ];
+  
+    var alreadyBoughtList = [];
+    
+    service.buyItem = function (index) {
+      var itemsInTransfer = toBuyList.splice(index, 1);
+      alreadyBoughtList.push(itemsInTransfer[0]);
+    };
+    
+    service.getToBuyList = function() {
+      return toBuyList;
+    };
 
+    service.getAlreadyBoughtList = function() {
+      return alreadyBoughtList;
+    };
+  }
 
 })();
 
