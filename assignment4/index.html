@@ -8,8 +8,8 @@
   <body ng-app='MenuApp'>
     <h2>Welcome to our Restaurant</h2>
 
-    <ui-view />
-
+    <!-- Views -->
+    <ui-view></ui-view>
     <loading-spinner></loading-spinner>
 
     <!-- Libraries -->
@@ -17,20 +17,25 @@
     <script src="lib/angular-ui-router.min.js"></script>
 
     <!-- Modules -->
-    <script src="src/menuApp/menuApp.module.js"></script>
     <script src="src/spinner/spinner.module.js"></script>
+    <script src="src/data/data.module.js"></script>
+    <script src="src/menuApp/menuapp.module.js"></script>
 
     <!-- Routes -->
     <script src="src/routes.js"></script>
 
     <!-- 'menuApp' module artifacts -->
-    <script src="src/menuApp/categoryList.component.js"></script>
+    <script src="src/menuApp/categories.component.js"></script>
     <script src="src/menuApp/categories.controller.js"></script>
-    <script src="src/menuApp/menu.service.js"></script>
+    <script src="src/menuApp/items.component.js"></script>
     <script src="src/menuApp/items.controller.js"></script>
+
+    <!-- 'Data' module artifacts -->
+    <script src="src/data/menudata.service.js"></script>
 
     <!-- 'Spinner' module artifacts -->
     <script src="src/spinner/loadingspinner.component.js"></script>
+    <script src="src/spinner/loadingspinner.controller.js"></script>
 
   </body>
 </html>

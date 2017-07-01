@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<div>
+
+  <ul>
+    <li ng-repeat="item in $ctrl.items">
+      <span style="font-weight: bold">[{{ item.short_name }}]  </span><span>  {{ item.name }}  </span>
+      <span style="font-style: italic"><br/>{{ item.description }}</span>
+    </li>
+  </ul>
+</div>

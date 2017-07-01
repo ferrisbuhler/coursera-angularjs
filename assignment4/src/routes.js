@@ -22,19 +22,25 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
   // categories page
   .state('categories', {
     url: '/categories',
-    templateUrl: 'src/menuApp/templates/categories.template.html',
+    templateUrl: 'src/menuApp/templates/categories.view.template.html',
     controller: 'CategoriesController as categories',
     resolve: {
-      items: ['MenuService', function (MenuService) {
-        return MenuService.getItems();
+      items: ['MenuDataService', function (MenuDataService) {
+        return MenuDataService.getAllCategories();
       }]
     }
   })
 
-  .state('categories.categoryItems', {
-    url: '/items/{categoryId}',
-    templateUrl: 'src/menuApp/templates/items.template.html',
-    controller: "ItemsController as categoryItems"
+  .state('categoryItems', {
+    url: '/items/{categoryShortname}',
+    templateUrl: 'src/menuApp/templates/items.view.template.html',
+    controller: "ItemsController as categoryItems",
+    resolve: {
+      items: ['$stateParams', 'MenuDataService',
+        function ($stateParams, MenuDataService) {
+          return MenuDataService.getItemsForCategory($stateParams.categoryShortname);
+        }]
+      }
   });
 
 }
