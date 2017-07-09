@@ -34,7 +34,7 @@ function MenuService($http, ApiPath) {
       })
       .catch(function (error) {
         return error;
-      });;
+      });
   };
 
 }

@@ -1,3 +1,8 @@
 .signup {
   color: black;
 }
+
+button:disabled.signup {
+  color: #666666;
+}
+
