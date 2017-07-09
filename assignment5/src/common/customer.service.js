@@ -7,7 +7,6 @@ angular.module('common')
 
   function CustomerService() {
     var customerService = this;
-    customerService.customer = {};
 
     customerService.setCustomer = function (customer) {
       customerService.customer = customer;

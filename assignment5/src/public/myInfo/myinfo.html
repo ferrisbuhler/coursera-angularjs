@@ -1,0 +1,33 @@
+<div class="container">
+  <h2 class="text-center">
+    Your customer profile
+  </h2>
+
+  <div ng-if="!myInfoCtrl.hasCustomer">
+    Not Signed Up Yet. <a ui-sref="public.signup">Sign up Now!</a>
+  </div>
+
+  <div ng-if="myInfoCtrl.hasCustomer">
+
+    <h3>Personal data</h3>
+    <div>
+      <div ng-if="myInfoCtrl.customer.firstname">{{myInfoCtrl.customer.firstname}}</div>
+      <div ng-if="myInfoCtrl.customer.lastname">{{myInfoCtrl.customer.lastname}}</div>
+      <div ng-if="myInfoCtrl.customer.email">{{myInfoCtrl.customer.email}}</div>
+      <div ng-if="myInfoCtrl.customer.phone">{{myInfoCtrl.customer.phone}}</div>
+    </div>
+
+    <h3>Your favourite dish</h3>
+    <div>
+      <div>
+        <div>{{myInfoCtrl.menuItem.short_name}}</div>
+        <img width="250" height="150" ng-src="{{myInfoCtrl.basePath}}/images/{{myInfoCtrl.menuItem.short_name}}.jpg" alt="{{myInfoCtrl.menuItem.name}}" />
+      </div>
+
+    <div>
+      <h3 class="menu-item-title">{{myInfoCtrl.menuItem.name}}</h3>
+      <p class="menu-item-details">{{myInfoCtrl.menuItem.description}}</p>
+    </div>
+  </div>
+</div>
+

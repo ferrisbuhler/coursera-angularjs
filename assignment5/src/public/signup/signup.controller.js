@@ -10,27 +10,22 @@ function SignupController(MenuService, CustomerService) {
   signupCtrl.dishValid = false;
   signupCtrl.succeeded = false;
 
+  signupCtrl.customer = CustomerService.getCustomer();
+
   signupCtrl.submit = function () {
     MenuService.getMenuItem(signupCtrl.customer.dishShortName).then(function(result) {
-      signupCtrl.menuItem = result;
 
-      console.log("signupCtrl.submit - menuItem:", signupCtrl.menuItem);
-
-      if(signupCtrl.menuItem.status) {
+      if(result.status) {
         signupCtrl.dishValid = false;
         signupCtrl.succeeded = false;
       } else {
         signupCtrl.dishValid = true;
         CustomerService.setCustomer(signupCtrl.customer);
 
-        console.log("signupCtrl.storeCustomer:", CustomerService.getCustomer());
-
         signupCtrl.succeeded = true;
       }
 
     });
-
-    
   };
 }
 })();
